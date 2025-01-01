@@ -1,7 +1,5 @@
 package states;
 
-import mikolka.compatibility.ModsHelper;
-import mikolka.vslice.freeplay.FreeplayState;
 import flixel.FlxObject;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
@@ -17,31 +15,22 @@ class MainMenuState extends MusicBeatState
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
+	
+
 
 	var optionShit:Array<String> = [
 		'story_mode',
 		'freeplay',
-		// #if MODS_ALLOWED 'mods', #end
-		// #if ACHIEVEMENTS_ALLOWED 'awards', #end
 		'credits',
-		// #if !switch 'donate', #end
 		'options'
 	];
 
 	var magenta:FlxSprite;
 	var camFollow:FlxObject;
-	var bf:FlxSprite;
+	var bf: FlxSprite;
 
-	public function new(isDisplayingRank:Bool = false) {
-
-		//TODO
-		super();
-	}
 	override function create()
 	{
-		Paths.clearUnusedMemory();
-		ModsHelper.clearStoredWithoutStickers();
-		
 		#if MODS_ALLOWED
 		Mods.pushGlobalMods();
 		#end
@@ -52,13 +41,16 @@ class MainMenuState extends MusicBeatState
 		DiscordClient.changePresence("In the Menus", null);
 		#end
 
+		transIn = FlxTransitionableState.defaultTransIn;
+		transOut = FlxTransitionableState.defaultTransOut;
 
 		persistentUpdate = persistentDraw = true;
 
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
-		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('mainmenu/menuBG'));
+		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
 		bg.antialiasing = ClientPrefs.data.antialiasing;
 		bg.scrollFactor.set(0, yScroll);
+		bg.setGraphicSize(Std.int(bg.width * 1.175));
 		bg.updateHitbox();
 		bg.screenCenter();
 		add(bg);
@@ -66,41 +58,38 @@ class MainMenuState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 1, 1);
 		add(camFollow);
 
-		magenta = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
-		magenta.antialiasing = ClientPrefs.data.antialiasing;
-		magenta.scrollFactor.set(0, yScroll);
-		magenta.setGraphicSize(Std.int(magenta.width * 1.175));
-		magenta.updateHitbox();
-		magenta.screenCenter();
-		magenta.visible = false;
-		magenta.color = 0xFFfd719b;
-		add(magenta);
+
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
 
 		for (i in 0...optionShit.length)
 		{
-			var offset:Float = 108 - (Math.max(optionShit.length, 4) - 4) * 80;
-			var menuItem:FlxSprite = new FlxSprite(0, (i) + offset/4);
+
+			var offset:Float = 12 - (Math.max(optionShit.length, 4) - 4) * 10 ;
+			var menuItem:FlxSprite = new FlxSprite(0, (i * 15) + offset);
 			menuItem.antialiasing = ClientPrefs.data.antialiasing;
 			menuItem.frames = Paths.getSparrowAtlas('mainmenu/menu_' + optionShit[i]);
 			menuItem.animation.addByPrefix('idle', optionShit[i] + " basic", 24);
 			menuItem.animation.addByPrefix('selected', optionShit[i] + " white", 24);
+			menuItem.updateHitbox();
 			menuItem.animation.play('idle');
+			menuItem.updateHitbox();
 			menuItems.add(menuItem);
 			var scr:Float = (optionShit.length - 4) * 0.135;
 			if (optionShit.length < 6)
 				scr = 0;
 			menuItem.scrollFactor.set(0, scr);
 			menuItem.updateHitbox();
-			menuItem.screenCenter(X);
-			menuItem.x += 50;
+			menuItem.x = 200;
+			menuItem.scale.set(0.9, 0.9);
 		}
 
-		bf = new FlxSprite(0, 0);
-        bf.frames = (Paths.getSparrowAtlas("mainmenu/mainmenu_bf"));
-        bf.animation.add("menu bf", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 24, true);
+
+		bf = new FlxSprite(-15, 40);
+        bf.scale.set(1, 1);
+        bf.frames = (Paths.getSparrowAtlas("mainmenu_bf"));
+        bf.animation.add("menu bf", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 16, true);
         bf.animation.play("menu bf");
         add(bf);
 
@@ -114,9 +103,8 @@ class MainMenuState extends MusicBeatState
 		fnfVer.scrollFactor.set();
 		add(psychVer);
 		add(fnfVer);
-		//var fnfVer:FlxText = new FlxText(12, FlxG.height - 24, 0, "Friday Night Funkin' ", 12);
-	
 		changeItem();
+
 
 		#if ACHIEVEMENTS_ALLOWED
 		// Unlocks "Freaky on a Friday Night" achievement if it's a Friday and between 18:00 PM and 23:59 PM
@@ -129,13 +117,8 @@ class MainMenuState extends MusicBeatState
 		#end
 		#end
 
-		#if TOUCH_CONTROLS_ALLOWED
-		addTouchPad('LEFT_FULL', 'A_B_E');
-		#end
-
 		super.create();
 
-		//FlxG.camera.follow(camFollow, null, 0.06);
 	}
 
 	var selectedSomethin:Bool = false;
@@ -145,8 +128,8 @@ class MainMenuState extends MusicBeatState
 		if (FlxG.sound.music.volume < 0.8)
 		{
 			FlxG.sound.music.volume += 0.5 * elapsed;
-			//if (FreeplayState.vocals != null)
-				//FreeplayState.vocals.volume += 0.5 * elapsed;
+			if (FreeplayState.vocals != null)
+				FreeplayState.vocals.volume += 0.5 * elapsed;
 		}
 
 		if (!selectedSomethin)
@@ -167,18 +150,15 @@ class MainMenuState extends MusicBeatState
 			if (controls.ACCEPT)
 			{
 				FlxG.sound.play(Paths.sound('confirmMenu'));
-				FlxTransitionableState.skipNextTransIn = false;
-				FlxTransitionableState.skipNextTransOut = false;
 				if (optionShit[curSelected] == 'donate')
 				{
-					CoolUtil.browserLoad('https://www.makeship.com/shop/creator/friday-night-funkin');
+					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
 				}
 				else
 				{
 					selectedSomethin = true;
 
-					// if (ClientPrefs.data.flashing)
-					// 	FlxFlicker.flicker(magenta, 1.1, 0.15, false);
+					if (ClientPrefs.data.flashing)
 
 					FlxFlicker.flicker(menuItems.members[curSelected], 1, 0.06, false, false, function(flick:FlxFlicker)
 					{
@@ -244,13 +224,13 @@ class MainMenuState extends MusicBeatState
 					}
 				}
 			}
-			if (#if TOUCH_CONTROLS_ALLOWED touchPad.buttonE.justPressed || #end controls.justPressed('debug_1'))
+			#if desktop
+			if (controls.justPressed('debug_1'))
 			{
 				selectedSomethin = true;
-				FlxTransitionableState.skipNextTransIn = false;
-				FlxTransitionableState.skipNextTransOut = false;
 				MusicBeatState.switchState(new MasterEditorMenu());
 			}
+			#end
 		}
 
 		super.update(elapsed);
@@ -260,8 +240,7 @@ class MainMenuState extends MusicBeatState
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 		menuItems.members[curSelected].animation.play('idle');
-		menuItems.members[curSelected].updateHitbox();
-		// menuItems.members[curSelected].screenCenter(X);
+
 
 		curSelected += huh;
 
@@ -271,8 +250,7 @@ class MainMenuState extends MusicBeatState
 			curSelected = menuItems.length - 1;
 
 		menuItems.members[curSelected].animation.play('selected');
-		// menuItems.members[curSelected].centerOffsets();
-		// menuItems.members[curSelected].screenCenter(X);
+
 
 		camFollow.setPosition(menuItems.members[curSelected].getGraphicMidpoint().x,
 			menuItems.members[curSelected].getGraphicMidpoint().y - (menuItems.length > 4 ? menuItems.length * 8 : 0));

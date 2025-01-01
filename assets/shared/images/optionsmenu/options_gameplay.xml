@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="options_gameplay.png">
+<SubTexture name="gameplay basic0000" x="0" y="315" width="441" height="134" frameX="-625" frameY="-327" frameWidth="1080" frameHeight="720" />
+<SubTexture name="gameplay basic0001" x="441" y="315" width="443" height="133" frameX="-622" frameY="-327" frameWidth="1080" frameHeight="720" />
+<SubTexture name="gameplay basic0002" x="466" y="159" width="439" height="135" frameX="-625" frameY="-326" frameWidth="1080" frameHeight="720" />
+<SubTexture name="gameplay white0000" x="467" y="0" width="468" height="158" frameX="-609" frameY="-311" frameWidth="1080" frameHeight="720" />
+<SubTexture name="gameplay white0001" x="0" y="0" width="467" height="159" frameX="-609" frameY="-310" frameWidth="1080" frameHeight="720" />
+<SubTexture name="gameplay white0002" x="0" y="159" width="466" height="156" frameX="-612" frameY="-312" frameWidth="1080" frameHeight="720" />
+</TextureAtlas>

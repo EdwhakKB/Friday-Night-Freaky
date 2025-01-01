@@ -123,10 +123,10 @@ xsi:schemaLocation="http://lime.openfl.org/project/1.0.4 http://lime.openfl.org/
 
 	<!-- _______________________________ Libraries ______________________________ -->
 
-	<haxelib name="flixel" version="git"/>
-	<haxelib name="flixel-addons" version="3.2.2"/>
-	<haxelib name="tjson" version="1.4.0"/>
-	<haxelib name="FlxPartialSound" version="git"/>
+	<haxelib name="flixel"/>
+	<haxelib name="flixel-addons"/>
+	<haxelib name="tjson"/>
+	<haxelib name="FlxPartialSound"/>
 	<haxelib name="grig.audio" />
 	<haxelib name="funkin.vis" />
 

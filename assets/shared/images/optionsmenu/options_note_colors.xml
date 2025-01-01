@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="options_note_colors.png">
+<SubTexture name="note_colors basic0000" x="438" y="292" width="440" height="118" frameX="-625" frameY="-17" frameWidth="1080" frameHeight="720" />
+<SubTexture name="note_colors basic0001" x="466" y="143" width="439" height="120" frameX="-625" frameY="-16" frameWidth="1080" frameHeight="720" />
+<SubTexture name="note_colors basic0002" x="0" y="292" width="438" height="119" frameX="-626" frameY="-17" frameWidth="1080" frameHeight="720" />
+<SubTexture name="note_colors white0000" x="466" y="0" width="469" height="143" frameX="-614" frameY="-1" frameWidth="1080" frameHeight="720" />
+<SubTexture name="note_colors white0001" x="0" y="148" width="466" height="144" frameX="-616" frameY="0" frameWidth="1080" frameHeight="720" />
+<SubTexture name="note_colors white0002" x="0" y="0" width="466" height="148" frameX="-617" frameY="0" frameWidth="1080" frameHeight="720" />
+</TextureAtlas>

@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="options_controls.png">
+<SubTexture name="controls basic0000" x="342" y="130" width="317" height="111" frameX="-734" frameY="-119" frameWidth="1080" frameHeight="720" />
+<SubTexture name="controls basic0001" x="0" y="263" width="317" height="110" frameX="-734" frameY="-120" frameWidth="1080" frameHeight="720" />
+<SubTexture name="controls basic0002" x="317" y="263" width="320" height="107" frameX="-733" frameY="-123" frameWidth="1080" frameHeight="720" />
+<SubTexture name="controls white0000" x="0" y="132" width="342" height="131" frameX="-721" frameY="-113" frameWidth="1080" frameHeight="720" />
+<SubTexture name="controls white0001" x="0" y="0" width="342" height="132" frameX="-721" frameY="-112" frameWidth="1080" frameHeight="720" />
+<SubTexture name="controls white0002" x="342" y="0" width="349" height="130" frameX="-719" frameY="-113" frameWidth="1080" frameHeight="720" />
+</TextureAtlas>

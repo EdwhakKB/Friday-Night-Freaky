@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="Locks.png">
+<SubTexture name="lock_up0000" x="100" y="0" width="30" height="44" frameX="-636" frameY="-159" frameWidth="1280" frameHeight="720" />
+<SubTexture name="lock_down0000" x="100" y="0" width="30" height="44" frameX="-631" frameY="-312" frameWidth="1280" frameHeight="720" />
+<SubTexture name="lock_left0000" x="0" y="0" width="50" height="76" frameX="-36" frameY="-413" frameWidth="1280" frameHeight="720" />
+<SubTexture name="lock_right0000" x="50" y="0" width="50" height="76" frameX="-1198" frameY="-413" frameWidth="1280" frameHeight="720" />
+</TextureAtlas>

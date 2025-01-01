@@ -11,15 +11,15 @@ import sys.thread.Thread;
 class OptionsState extends MusicBeatState
 {
 	var options:Array<String> = [
-		'Note Colors',
+		'Note_Colors',
 		'Controls',
-		'Adjust Delay and Combo',
+		//'Adjust Delay and Combo',
 		'Graphics',
-		'Visuals',
-		'Gameplay',
-		'V-Slice Options',
-		#if TRANSLATIONS_ALLOWED  'Language', #end
-		#if (TOUCH_CONTROLS_ALLOWED || mobile)'Mobile Options' #end
+		//'Visuals',
+		'Gameplay'
+		//'V-Slice Options',
+		// #if TRANSLATIONS_ALLOWED  'Language', #end
+		// #if (TOUCH_CONTROLS_ALLOWED || mobile)'Mobile Options' #end
 	];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
@@ -31,6 +31,10 @@ class OptionsState extends MusicBeatState
 	public static var funnyCam:FlxCamera;
 	private var camFollow:FlxObject;
 	private var camFollowPos:FlxObject;
+	var menuItems:FlxTypedGroup<FlxSprite>;
+	var bf:FlxSprite;
+	var toolBox:FlxSprite;
+	var optionThingy:FlxSprite;
 
 	function openSelectedSubstate(label:String) {
 		if (label != "Adjust Delay and Combo")
@@ -38,7 +42,7 @@ class OptionsState extends MusicBeatState
 
 		switch(label)
 		{
-			case 'Note Colors':
+			case 'Note_Colors':
 				openSubState(new options.NotesColorSubState());
 			case 'Controls':
 				if (controls.mobileC)
@@ -84,9 +88,9 @@ class OptionsState extends MusicBeatState
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('optionsmenu/Options_BG'));
 		bg.antialiasing = ClientPrefs.data.antialiasing;
-		bg.color = 0xFFea71fd;
+		bg.setGraphicSize(FlxG.width, FlxG.height);
 		bg.updateHitbox();
 
 		bg.screenCenter();
@@ -95,14 +99,52 @@ class OptionsState extends MusicBeatState
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
 
-		for (num => option in options)
+		menuItems = new FlxTypedGroup<FlxSprite>();
+		add(menuItems);
+
+		for (i in 0...options.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, 0, Language.getPhrase('options_$option', option), true);
-			optionText.screenCenter();
-			optionText.y += (92 * (num - (options.length / 2))) + 45;
-			optionText.cameras = [funnyCam];
-			grpOptions.add(optionText);
+			var offset:Float = 108 - (Math.max(options.length, 4) - 4) * 80;
+			var menuItem:FlxSprite = new FlxSprite(0, (i) + offset/4 - offset/4);
+			menuItem.antialiasing = ClientPrefs.data.antialiasing;
+			menuItem.frames = Paths.getSparrowAtlas('optionsmenu/options_' + options[i].toLowerCase());
+			menuItem.animation.addByPrefix('idle', options[i].toLowerCase() + " basic", 24);
+			menuItem.animation.addByPrefix('selected', options[i].toLowerCase() + " white", 24);
+			menuItem.animation.play('idle');
+			menuItems.add(menuItem);
+			var scr:Float = (options.length - 4) * 0.135;
+			if (options.length < 6)
+				scr = 0;
+			menuItem.scrollFactor.set(0, scr);
+			menuItem.updateHitbox();
+			menuItem.screenCenter(X);
+			menuItem.x += 50;
 		}
+
+		optionThingy = new FlxSprite(50, 0);
+		optionThingy.frames = (Paths.getSparrowAtlas("optionsmenu/options_title"));
+        optionThingy.animation.addByPrefix("idle", "options_title", 24, true);
+        optionThingy.animation.play("idle");
+        add(optionThingy);
+
+		bf = new FlxSprite(50, 0);
+        bf.frames = (Paths.getSparrowAtlas("optionsmenu/options_bf"));
+        bf.animation.addByPrefix("menu bf", "options_bf", 24, true);
+        bf.animation.play("menu bf");
+        add(bf);
+
+		toolBox = new FlxSprite(0, 0).loadGraphic(Paths.image('optionsmenu/ToolBox'));
+		toolBox.x = FlxG.width - toolBox.width;
+        add(toolBox);
+
+		// for (num => option in options)
+		// {
+		// 	var optionText:Alphabet = new Alphabet(0, 0, Language.getPhrase('options_$option', option), true);
+		// 	optionText.screenCenter();
+		// 	optionText.y += (92 * (num - (options.length / 2))) + 45;
+		// 	optionText.cameras = [funnyCam];
+		// 	grpOptions.add(optionText);
+		// }
 
 		changeSelection();
 		ClientPrefs.saveSettings();
@@ -153,23 +195,23 @@ class OptionsState extends MusicBeatState
 			changeSelection(1);
 
 		var lerpVal:Float = Math.max(0, Math.min(1, elapsed * 7.5));
-		camFollowPos.setPosition(635, FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
+		//camFollowPos.setPosition(635, FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 
 		var bullShit:Int = 0;
 
-		for (item in grpOptions.members)
-		{
-			item.targetY = bullShit - curSelected;
-			bullShit++;
+		// for (item in grpOptions.members)
+		// {
+		// 	item.targetY = bullShit - curSelected;
+		// 	bullShit++;
 
-			var thing:Float = 0;
-			if (item.targetY == 0) {
-				if(grpOptions.members.length > 6) {
-					thing = grpOptions.members.length * 2;
-				}
-				camFollow.setPosition(635, item.getGraphicMidpoint().y + 100 - thing);
-			}
-		}
+		// 	var thing:Float = 0;
+		// 	if (item.targetY == 0) {
+		// 		if(grpOptions.members.length > 6) {
+		// 			thing = grpOptions.members.length * 2;
+		// 		}
+		// 		camFollow.setPosition(635, item.y + 100 - thing);
+		// 	}
+		// }
 
 		if (controls.BACK)
 		{
@@ -187,18 +229,24 @@ class OptionsState extends MusicBeatState
 	
 	function changeSelection(change:Int = 0)
 	{
-		curSelected = FlxMath.wrap(curSelected + change, 0, options.length - 1);
-
-		for (num => item in grpOptions.members)
-		{
-			item.targetY = num - curSelected;
-			item.alpha = 0.6;
-			if (item.targetY == 0)
-			{
-				item.alpha = 1;
-			}
-		}
 		FlxG.sound.play(Paths.sound('scrollMenu'));
+		menuItems.members[curSelected].animation.play('idle');
+		menuItems.members[curSelected].updateHitbox();
+		//menuItems.members[curSelected].screenCenter(X);
+
+		curSelected += change;
+
+		if (curSelected >= menuItems.length)
+			curSelected = 0;
+		if (curSelected < 0)
+			curSelected = menuItems.length - 1;
+
+		menuItems.members[curSelected].animation.play('selected');
+		menuItems.members[curSelected].centerOffsets();
+		//menuItems.members[curSelected].screenCenter(X);
+
+		camFollow.setPosition(menuItems.members[curSelected].getGraphicMidpoint().x,
+			menuItems.members[curSelected].getGraphicMidpoint().y - (menuItems.length > 4 ? menuItems.length * 8 : 0));
 	}
 
 	override function destroy()

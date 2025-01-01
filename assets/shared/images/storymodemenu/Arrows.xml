@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<TextureAtlas imagePath="Arrows.png">
+<SubTexture name="arrow_right0000" x="0" y="0" width="31" height="57" frameX="-363" frameY="-81" frameWidth="1280" frameHeight="720" />
+<SubTexture name="press_left0000" x="62" y="0" width="35" height="56" frameX="-125" frameY="-83" frameWidth="1280" frameHeight="720" />
+<SubTexture name="arrow_left0000" x="31" y="0" width="31" height="57" frameX="-129" frameY="-80" frameWidth="1280" frameHeight="720" />
+<SubTexture name="press_right0000" x="97" y="0" width="35" height="56" frameX="-362" frameY="-83" frameWidth="1280" frameHeight="720" />
+<SubTexture name="arrow_down0000" x="0" y="57" width="57" height="33" frameX="-618" frameY="-317" frameWidth="1280" frameHeight="720" />
+<SubTexture name="press_down0000" x="0" y="90" width="64" height="30" frameX="-615" frameY="-320" frameWidth="1280" frameHeight="720" />
+<SubTexture name="arrow_up0000" x="57" y="57" width="57" height="33" frameX="-623" frameY="-166" frameWidth="1280" frameHeight="720" />
+<SubTexture name="press_up0000" x="64" y="90" width="64" height="30" frameX="-620" frameY="-165" frameWidth="1280" frameHeight="720" />
+</TextureAtlas>
