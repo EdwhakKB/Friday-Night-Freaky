@@ -1,0 +1,11 @@
+{
+	"confirm_anim": "Story_Pico_idle",
+	"idle_anim": "Story_Pico_idle",
+	"position": [
+		170,
+		64
+	],
+	"scale": 1,
+	"image": "Story_Pico",
+	"flipX": false
+}

@@ -1,0 +1,11 @@
+{
+	"confirm_anim": "Story_BF_idle",
+	"idle_anim": "Story_BF_idle",
+	"position": [
+		470,
+		70
+	],
+	"scale": 1,
+	"image": "Story_BF",
+	"flipX": false
+}

@@ -13,13 +13,13 @@ class OptionsState extends MusicBeatState
 	var options:Array<String> = [
 		'Note_Colors',
 		'Controls',
-		//'Adjust Delay and Combo',
 		'Graphics',
-		//'Visuals',
-		'Gameplay'
-		//'V-Slice Options',
-		// #if TRANSLATIONS_ALLOWED  'Language', #end
-		// #if (TOUCH_CONTROLS_ALLOWED || mobile)'Mobile Options' #end
+		'Gameplay',
+		'Adjust_Delay_and_Combo',
+		'Visuals',
+		'V-Slice_Options',
+		#if TRANSLATIONS_ALLOWED  'Language', #end
+		#if (TOUCH_CONTROLS_ALLOWED || mobile)'Mobile Options' #end
 	];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
@@ -58,9 +58,9 @@ class OptionsState extends MusicBeatState
 				openSubState(new options.VisualsSettingsSubState());
 			case 'Gameplay':
 				openSubState(new options.GameplaySettingsSubState());
-			case 'Adjust Delay and Combo':
+			case 'Adjust_Delay_and_Combo':
 				MusicBeatState.switchState(new options.NoteOffsetState());
-			case 'V-Slice Options':
+			case 'V-Slice_Options':
 				openSubState(new BaseGameSubState());
 			#if (TOUCH_CONTROLS_ALLOWED || mobile)
 			case 'Mobile Options':
